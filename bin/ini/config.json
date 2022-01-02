@@ -1,0 +1,25 @@
+{
+    "Mysql": {
+        "pwd": "123456"
+    },
+    "Process": {
+        "mask": "cmd--执行指令,option--spwan执行的配置, isListen--开启本地udp 监听",
+        "isListen": true,
+        "option": {
+            "cwd": "./bin/subPython",
+            "stdio": "inherit"
+        },
+        "spawns": {
+            "groupName": [
+                {
+                    "cmd": "py",
+                    "nameKey": "test",
+                    "args": [
+                        "test.py"
+                    ],
+                    "processNum": 1
+                }
+            ]
+        }
+    }
+}
