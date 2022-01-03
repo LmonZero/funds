@@ -2,7 +2,7 @@
 const tools = require('../lib/tools')
 const fs = require('fs')
 const dingding = require('../lib/dingding')
-
+const path = require("path")
 // let test = fs.readFileSync("test.json", 'utf8')
 // // console.log(test)
 // let t1 = process.hrtime()
@@ -107,7 +107,10 @@ tools.requestHttp(url, {
 }, 'get', { headers })
     .then(async (v) => {
         // fs.writeFileSync('./test.json', v)
-        let ini = tools.jsonIni('./fund.json')
+        let iniFile = path.join(__dirname, 'fund.json')
+        console.log(__dirname, __filename, iniFile)
+        console.log(path.resolve('fund.json'))
+        let ini = tools.jsonIni(iniFile)
         console.log(ini)
         let needFundCodes = Object.keys(ini)
         let codes = needFundCodes.join('|')
