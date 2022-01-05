@@ -1,10 +1,12 @@
 const tools = require('./lib/tools')
-const mysqlHelper = require('./lib/helper/helper_mysql')
+const appHandeler = require('./appHandler/appHandler')
+// const mysqlHelper = require('./lib/helper/helper_mysql')
 
 
 function main() {
-    const mysql = new mysqlHelper()
-
+    // const mysql = new mysqlHelper()
+    let appHandelerInstance = new appHandeler()
+    appHandelerInstance.init()
 }
 
-main(tools.info(true))
+main()
