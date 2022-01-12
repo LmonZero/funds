@@ -6,6 +6,10 @@ function main() {
     // const mysql = new mysqlHelper()
     let appHandelerInstance = new appHandeler()
     appHandelerInstance.init()
+
+    global.instance = {
+        appHandelerInstance: appHandelerInstance
+    }
 }
 
 main()

@@ -1,7 +1,7 @@
 const Koa = require('koa');
 const tools = require('../lib/tools');
 const Router = require('koa-router');
-
+const bodyParser = require('koa-bodyparser')
 const indexRouter = require('./routes');
 
 class KoaManager {
@@ -20,6 +20,7 @@ class KoaManager {
 
         var router = new Router();
         router.use('/', indexRouter);
+        app.use(bodyParser())
         app.use(router.routes()) //启动路由
         app.use(router.allowedMethods())//可设也可以不设，建议设置
 
