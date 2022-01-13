@@ -1,14 +1,20 @@
 const tools = require('./lib/tools')
+const path = require('path')
 const appHandeler = require('./appHandler/appHandler')
-
+const mysql = require('./appHandler/interface_mysql')
+// const iniConfig = require('./lib/helper/helper_ini');
+// const NodeRSA = require('node-rsa');
 function main() {
-    // const mysql = new mysqlHelper()
+
+    let mysqlHandelerIntance = new mysql()
     let appHandelerInstance = new appHandeler()
-    appHandelerInstance.init()
     global.instance = {
         appHandelerInstance: appHandelerInstance,
         mysqlHelperIntance: mysqlHelperIntance
     }
+
+    mysqlHandelerIntance.init()
+    appHandelerInstance.init()
 }
 
 main()

@@ -42,6 +42,7 @@ function netValueMovements(code, day = 2, times = 7) {
 
 module.exports = function (day = 2, times = 7) {
     return new Promise((reslove, reject) => {
+
         tools.requestHttp(url, {
             "type": 1,
             "sort": "3",
@@ -53,11 +54,12 @@ module.exports = function (day = 2, times = 7) {
         }, 'get', { headers })
             .then(async (v) => {
                 // fs.writeFileSync('./test.json', v)
-                let iniFile = path.join(__dirname, 'fund.json')
-                console.log(__dirname, __filename, iniFile)
-                console.log(path.resolve('fund.json'))
-                let ini = tools.jsonIni(iniFile)
-                console.log(ini)
+                // let iniFile = path.join(__dirname, 'fund.json')
+                // console.log(__dirname, __filename, iniFile)
+                // console.log(path.resolve('fund.json'))
+                // let ini = tools.jsonIni(iniFile)
+                // console.log(ini)
+                let ini = await instance.mysqlHelperIntance.optionalFunds()
                 let needFundCodes = Object.keys(ini)
                 let codes = needFundCodes.join('|')
                 let reg = RegExp(`{[^(bzdm)]*"bzdm":"(${codes})"[^}]*}`, 'g')
