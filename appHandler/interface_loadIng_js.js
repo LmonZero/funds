@@ -1,4 +1,3 @@
-const { join } = require('path')
 const tools = require('../lib/tools')
 const tempCodeCfg = require('./loading_js/config')
 const util = require('util')
@@ -11,7 +10,11 @@ class loading {
         }
     }
     init() {
+        // tools.debug(tempCodeCfg)
         for (let scriptInfo of tempCodeCfg.scriptInfo) {
+            // tools.debug(scriptInfo.name)
+            // tools.debug(scriptInfo.main)
+
             try {
                 let cmdClass = { key: 'p', name: '未知' }
                 if (scriptInfo.group) {
@@ -22,14 +25,14 @@ class loading {
                 this.scriptInfo.cmdClass.push(cmdClass)
 
                 this.scriptInfo.cmdTable[cmdClass.key] = {}
-
-                if (scriptInfo.name && scriptInfo.mian) {
+                if (scriptInfo.name && scriptInfo.main) {
                     this.scriptInfo.cmdTable[cmdClass.key][scriptInfo.name] = {
-                        mian: scriptInfo.mian,
+                        mian: scriptInfo.main,
+                        reqFilePath: scriptInfo.reqFilePath,
                         description: scriptInfo.description
                     }
                 }
-
+                // tools.debug('--->', this.scriptInfo)
             } catch (error) {
                 tools.error('error->', error, '\r\n', scriptInfo)
             }
@@ -62,7 +65,8 @@ class loading {
             funcMain = this.scriptInfo.cmdTable[group][name]["mian"]
             // tools.debug('error->', filePath)
             // funcMain = require(filePath)
-            // delete require(require.resolve(filePath))
+            // delete require.cache[require.resolve(this.scriptInfo.cmdTable[group][name]["reqFilePath"])]
+
         } catch (error) {
             tools.error(`${group}-${name}`, 'getScript error->', error)
         }

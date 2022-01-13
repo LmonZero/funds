@@ -1,6 +1,4 @@
-
-
-const tools = require('../lib/tools')
+const tools = require('../../../lib/tools')
 const path = require("path")
 let url = "http://api.fund.eastmoney.com/FundGuZhi/GetFundGZList"
 let headers = {
@@ -42,65 +40,65 @@ function netValueMovements(code, day = 2, times = 7) {
     })
 }
 
-tools.requestHttp(url, {
-    "type": 1,
-    "sort": "3",
-    "orderType": "asc",
-    "canbuy": "0",
-    "pageIndex": "1",
-    "pageSize": "30000",
-    "_": time.getTime(),
-}, 'get', { headers })
-    .then(async (v) => {
-        // fs.writeFileSync('./test.json', v)
-        let iniFile = path.join(__dirname, 'fund.json')
-        console.log(__dirname, __filename, iniFile)
-        console.log(path.resolve('fund.json'))
-        let ini = tools.jsonIni(iniFile)
-        console.log(ini)
-        let needFundCodes = Object.keys(ini)
-        let codes = needFundCodes.join('|')
-        let reg = RegExp(`{[^(bzdm)]*"bzdm":"(${codes})"[^}]*}`, 'g')
-        console.log(reg)
-        // console.log(v.match(reg))
-        let datas = v.match(reg)
-        let funds = {}
-        for (let d of datas) {
-            let temp = JSON.parse(d)
-            let code = temp["bzdm"]
-            if (code) {
-                funds[code] = {
-                    rate: temp['gszzl'],
-                    name: temp["jjjc"],
-                    recent: []
+module.exports = function (day = 2, times = 7) {
+    return new Promise((reslove, reject) => {
+        tools.requestHttp(url, {
+            "type": 1,
+            "sort": "3",
+            "orderType": "asc",
+            "canbuy": "0",
+            "pageIndex": "1",
+            "pageSize": "30000",
+            "_": time.getTime(),
+        }, 'get', { headers })
+            .then(async (v) => {
+                // fs.writeFileSync('./test.json', v)
+                let iniFile = path.join(__dirname, 'fund.json')
+                console.log(__dirname, __filename, iniFile)
+                console.log(path.resolve('fund.json'))
+                let ini = tools.jsonIni(iniFile)
+                console.log(ini)
+                let needFundCodes = Object.keys(ini)
+                let codes = needFundCodes.join('|')
+                let reg = RegExp(`{[^(bzdm)]*"bzdm":"(${codes})"[^}]*}`, 'g')
+                console.log(reg)
+                // console.log(v.match(reg))
+                let datas = v.match(reg)
+                let funds = {}
+                for (let d of datas) {
+                    let temp = JSON.parse(d)
+                    let code = temp["bzdm"]
+                    if (code) {
+                        funds[code] = {
+                            rate: temp['gszzl'],
+                            name: temp["jjjc"],
+                            recent: []
+                        }
+                        funds[code].recent = await netValueMovements(code, day = 2, times = 7)
+                    }
                 }
-                funds[code].recent = await netValueMovements(code)
-            }
-        }
-        console.log(funds)
+                console.log(funds)
 
-        //进行逻辑分析
-        let content = ''
-        for (let code in funds) {
-            let max = ini[code].max
-            let fund = funds[code]
-            let f = fund.recent.filter(v => parseFloat(v) < parseFloat(max))
-            if (f.length) {
-                let recent = fund.recent.map((v, index) => {
-                    return `【${(index + 1) * 2}day】${v}`
-                })
-                content += `${code}-${fund.name}（${fund.rate}）(max:${max}):\n${recent.join('\t')}\r\n`
-            }
-        }
+                //进行逻辑分析
+                let content = ''
+                for (let code in funds) {
+                    let max = ini[code].max
+                    let fund = funds[code]
+                    let f = fund.recent.filter(v => parseFloat(v) < parseFloat(max))
+                    if (f.length) {
+                        let recent = fund.recent.map((v, index) => {
+                            return `【${(index + 1) * 2}day】${v}`
+                        })
+                        content += `${code}-${fund.name}（${fund.rate}）(max:${max}):\n${recent.join('\t')}\r\n`
+                    }
+                }
+                reslove(content)
+                // console.log(content)
+                // dingding.sendDingdingMsg(content, ["13221160826"])
 
-        // console.log(content)
-        // dingding.sendDingdingMsg(content, ["13221160826"])
+            })
+            .catch(e => reject(e))
 
     })
-    .catch(e => console.log(e))
 
-
-
-module.exports = function (day = 2, times = 7) {
-    return "你很不错"
 }
