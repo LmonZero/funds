@@ -28,7 +28,7 @@ class loading {
                 if (scriptInfo.name && scriptInfo.main) {
                     this.scriptInfo.cmdTable[cmdClass.key][scriptInfo.name] = {
                         mian: scriptInfo.main,
-                        reqFilePath: scriptInfo.reqFilePath,
+                        // reqFilePath: scriptInfo.reqFilePath,
                         description: scriptInfo.description
                     }
                 }
