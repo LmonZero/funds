@@ -1,5 +1,4 @@
 const tools = require('../../../lib/tools')
-const path = require("path")
 let url = "http://api.fund.eastmoney.com/FundGuZhi/GetFundGZList"
 let headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36",
@@ -40,9 +39,8 @@ function netValueMovements(code, day = 2, times = 7) {
     })
 }
 
-module.exports = function (day = 2, times = 7) {
+function main(day = 2, times = 7, max = null) {
     return new Promise((reslove, reject) => {
-
         tools.requestHttp(url, {
             "type": 1,
             "sort": "3",
@@ -59,7 +57,14 @@ module.exports = function (day = 2, times = 7) {
                 // console.log(path.resolve('fund.json'))
                 // let ini = tools.jsonIni(iniFile)
                 // console.log(ini)
-                let ini = await instance.mysqlHelperIntance.optionalFunds()
+                let optionalFunds = await instance.mysqlHelperIntance.optionalFunds()
+                let ini = {}
+                for (let funds of optionalFunds) {
+                    ini[funds.fundCode] = {
+                        name: funds.fundName,
+                        max: max != null ? parseFloat(max).toFixed(2) : funds.max
+                    }
+                }
                 let needFundCodes = Object.keys(ini)
                 let codes = needFundCodes.join('|')
                 let reg = RegExp(`{[^(bzdm)]*"bzdm":"(${codes})"[^}]*}`, 'g')
@@ -76,7 +81,7 @@ module.exports = function (day = 2, times = 7) {
                             name: temp["jjjc"],
                             recent: []
                         }
-                        funds[code].recent = await netValueMovements(code, day = 2, times = 7)
+                        funds[code].recent = await netValueMovements(code, parseInt(day), parseInt(times))
                     }
                 }
                 console.log(funds)
@@ -103,4 +108,9 @@ module.exports = function (day = 2, times = 7) {
 
     })
 
+}
+
+
+module.exports = async function (info) {
+    return await main(...info.param)
 }

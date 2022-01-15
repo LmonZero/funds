@@ -45,9 +45,9 @@ class loading {
             let main = this.getScript(info.cmd, info.param[0])
             if (main) {
                 if (util.types.isAsyncFunction(main)) {
-                    res = await main(...info.param.slice(1))
+                    res = await main({ param: info.param.slice(1), content: info.content })
                 } else {
-                    res = main(...info.param.slice(1))
+                    res = main({ param: info.param.slice(1), content: info.content })
                 }
             } else {
                 tools.debug("没脚本？？？")

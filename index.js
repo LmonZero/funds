@@ -10,7 +10,7 @@ function main() {
     let appHandelerInstance = new appHandeler()
     global.instance = {
         appHandelerInstance: appHandelerInstance,
-        mysqlHelperIntance: mysqlHelperIntance
+        mysqlHelperIntance: mysqlHandelerIntance
     }
 
     mysqlHandelerIntance.init()

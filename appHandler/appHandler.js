@@ -46,28 +46,33 @@ class appHandeler {
             cmdinfo.whoRebot = whoRebot
             cmdinfo.whoSend = whoSend
             tools.debug('parseInfo-->', cmdinfo)
-            switch (cmdinfo.cmd) {
-                case "help": {
-                    if (cmdinfo.param.length) {
-                        let group = cmdinfo.param[0]
-                        if (this.loadingJs.scriptInfo.cmdTable[group]) {
+            if (cmdinfo.cmd) {
+                switch (cmdinfo.cmd) {
+                    case "help": {
+                        if (cmdinfo.param.length) {
+                            let group = cmdinfo.param[0]
+                            if (this.loadingJs.scriptInfo.cmdTable[group]) {
+                                res = ''
+                                for (let name in this.loadingJs.scriptInfo.cmdTable[group]) {
+                                    let scriptInfo = this.loadingJs.scriptInfo.cmdTable[group][name]
+                                    res += `${scriptInfo.description}\n\t查询指令：[${group}(${name})]\n`
+                                }
+                            }
+                        } else {
                             res = ''
-                            for (let name in this.loadingJs.scriptInfo.cmdTable[group]) {
-                                let scriptInfo = this.loadingJs.scriptInfo.cmdTable[group][name]
-                                res += `${scriptInfo.description}\n\t查询指令：[${group}(${name})]\n`
+                            for (let cmdClass of this.loadingJs.scriptInfo.cmdClass) {
+                                res += `${cmdClass.name}\n\t查询指令：[help(${cmdClass.key})]\n`
                             }
                         }
-                    } else {
-                        res = ''
-                        for (let cmdClass of this.loadingJs.scriptInfo.cmdClass) {
-                            res += `${cmdClass.name}\n\t查询指令：[help(${cmdClass.key})]\n`
-                        }
+                        break;
                     }
-                    break;
+                    default: {
+                        res = await this.loadingJs.run(cmdinfo)
+                    }
                 }
-                default: {
-                    res = await this.loadingJs.run(cmdinfo)
-                }
+            } else {
+                // tools.error('no cmd')
+                // res = `很抱歉哦!【${whoRebot}】我听不懂你在讲什么,请尝试输入[help]`
             }
         } catch (error) {
             tools.error("rebootParse error->", error)
@@ -82,7 +87,7 @@ class appHandeler {
             param: [],
             content: ''
         }
-        let infos = msg.match(/(?<=^\s*\[)[\u4e00-\u9fa5\w]*(\([\w,]*\))?(?=\])/g)
+        let infos = msg.match(/(?<=^\s*\[)[\u4e00-\u9fa5\w]*(\([\w,-.]*\))?(?=\])/g)
         if (infos) {
             let info = infos[0]
             let cmd = info.match(/^[\u4e00-\u9fa5\w]*/g)
@@ -90,12 +95,12 @@ class appHandeler {
                 res.cmd = cmd[0]
             }
 
-            let param = info.match(/(?<=\()[\w,]*(?=\))/g)
+            let param = info.match(/(?<=\()[\w,-。]*(?=\))/g)
             if (param) {
                 res.param = param[0].split(',')
             }
         }
-        let content = msg.match(/(?<=^\s*\[[\u4e00-\u9fa5\w]*(\([\w,]*\))?\])(.|\n)*/g)
+        let content = msg.match(/(?<=^\s*\[[\u4e00-\u9fa5\w]*(\([\w,-.]*\))?\])(.|\n)*/g)
         content = content ? content[0] : ''
         res.content = content.replace(/^\s+|\s+$/g, '')//去除头尾换行符
         return res

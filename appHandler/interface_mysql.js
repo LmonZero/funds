@@ -1,9 +1,10 @@
-const mysqlHelper = require('../lib/helper/helper_mysql')
+const mysqlHelper = require('../lib/helper/helper_mysql');
+const tools = require('../lib/tools');
 
 class mysqlInterface {
     constructor() {
     }
-    init(cfg = { host: '127.0.0.1', user: "root", password: "lmon.com", database='lmonFund' }) {
+    init(cfg = { host: '127.0.0.1', user: "root", password: "lmon.com", database: 'lmonFund' }) {
         this.mysqlHelper = new mysqlHelper()
         this.mysqlHelper.init(cfg)
         this.dbTest()
@@ -60,6 +61,12 @@ class mysqlInterface {
     async optionalFunds() {
         let sql = `select * from optionalFunds`
         return await this.dbop(sql);
+    }
+
+    async insterTable(obj, tableName) {
+        let sql = `insert into ${tableName} (${Object.keys(obj).join(',')}) values ('${Object.values(obj).join("','")}')`
+        tools.debug('sql->', sql)
+        await this.dbop(sql)
     }
 }
 
