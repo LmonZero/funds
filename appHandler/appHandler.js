@@ -67,7 +67,8 @@ class appHandeler {
                         break;
                     }
                     default: {
-                        res = await this.loadingJs.run(cmdinfo)
+                        let temp = await this.loadingJs.run(cmdinfo)
+                        res = temp ? temp : res
                     }
                 }
             } else {
@@ -87,7 +88,7 @@ class appHandeler {
             param: [],
             content: ''
         }
-        let infos = msg.match(/(?<=^\s*\[)[\u4e00-\u9fa5\w]*(\([\w,-.]*\))?(?=\])/g)
+        let infos = msg.match(/(?<=^\s*\[)[\u4e00-\u9fa5\w]*(\([\w,-.\u4e00-\u9fa5]*\))?(?=\])/g)
         if (infos) {
             let info = infos[0]
             let cmd = info.match(/^[\u4e00-\u9fa5\w]*/g)
@@ -95,12 +96,12 @@ class appHandeler {
                 res.cmd = cmd[0]
             }
 
-            let param = info.match(/(?<=\()[\w,-。]*(?=\))/g)
+            let param = info.match(/(?<=\()[\w,-.\u4e00-\u9fa5]*(?=\))/g)
             if (param) {
                 res.param = param[0].split(',')
             }
         }
-        let content = msg.match(/(?<=^\s*\[[\u4e00-\u9fa5\w]*(\([\w,-.]*\))?\])(.|\n)*/g)
+        let content = msg.match(/(?<=^\s*\[[\u4e00-\u9fa5\w]*(\([\w,-.\u4e00-\u9fa5]*\))?\])(.|\n)*/g)
         content = content ? content[0] : ''
         res.content = content.replace(/^\s+|\s+$/g, '')//去除头尾换行符
         return res

@@ -1,5 +1,5 @@
 
-await function main(info) {
+async function main(info) {
 
     let tableInfo = {
         mainTheme: info.param[0],
