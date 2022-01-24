@@ -70,7 +70,7 @@ class mysqlInterface {
     }
 
     async searchNote(tag, mainTitle, mainTheme, content) {
-        let sql = `select * from notes where id>0`
+        let sql = `select * from notes`
         let temp = []
         if (tag) {
             temp.push(`tag like %${tag}%`)
@@ -84,7 +84,9 @@ class mysqlInterface {
         if (content) {
             temp.push(`content like %${content}%`)
         }
-        sql += temp.join(' or ')
+        if (temp.length > 0) {
+            sql += ` (${temp.join(' or ')})`
+        }
         tools.debug('sql->', sql)
         return await this.dbop(sql)
     }
