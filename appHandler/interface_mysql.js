@@ -59,7 +59,7 @@ class mysqlInterface {
     }
 
     async optionalFunds() {
-        let sql = `select * from optionalFunds`
+        let sql = `select * from optionalFunds where isUse=1`
         return await this.dbop(sql);
     }
 
