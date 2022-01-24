@@ -23,7 +23,7 @@ const router = require('koa-router')();
 // }
 
 router.post("/rebot", async (ctx) => {
-    // console.log(ctx.request.body)
+    console.log(ctx.request.body)
     let body = ctx.request.body
     try {
         let content = await instance.appHandelerInstance.rebootParse(body.text.content, body.conversationTitle, body.senderNick)
