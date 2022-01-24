@@ -116,7 +116,6 @@ module.exports = async function (info) {
         return await main(...info.param)
     } else {
         let content = await main()
-        let dingding = require('../../../lib/dingding')
-        dingding.sendDingdingMsg(content, ["13221160826"])
+        tools.sendDingDingMsg('https://oapi.dingtalk.com/robot/send?access_token=339b73ac2ae39cc3cb7016b53a1cbd4dcc783f97a6248649bfef3dfeb38c88f6', content, ["13221160826"], [])
     }
 }

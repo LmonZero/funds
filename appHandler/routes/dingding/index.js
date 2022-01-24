@@ -4,21 +4,27 @@ const router = require('koa-router')();
 
 
 // {
-//   conversationId: 'cidOWN+kh2kmRPaPWbC9Dm1bQ==',
-//   atUsers: [ { dingtalkId: '$:LWCP_v1:$znAU0xRHLBPb5y3TlpBwrLtCDuQ6r/ZC' } ],
-//   chatbotUserId: '$:LWCP_v1:$znAU0xRHLBPb5y3TlpBwrLtCDuQ6r/ZC',
-//   msgId: 'msgOamHieIoEH2L7feRb38dtQ==',
+//    conversationId: 'cidaye6xA8rilb2GRGxNTLy/g==',
+//   sceneGroupCode: 'project',
+//   atUsers: [ { dingtalkId: '$:LWCP_v1:$5mVxUMOu7arbuvLRwar1JEjwLyLGgjCc' } ],
+//   chatbotCorpId: 'dingeee1db426a0288e8ee0f45d8e4f7c288',
+//   chatbotUserId: '$:LWCP_v1:$5mVxUMOu7arbuvLRwar1JEjwLyLGgjCc',
+//   msgId: 'msgPgrPskkUlJ0YuPE9zlUpOA==',
 //   senderNick: '林喜钦',
-//   isAdmin: false,
-//   sessionWebhookExpiredTime: 1641808405290,
-//   createAt: 1641803005036,
+//   isAdmin: true,
+//   senderStaffId: '176568060226202209',
+//   sessionWebhookExpiredTime: 1643004955657,
+//   createAt: 1642999555397,
+//   senderCorpId: 'dingeee1db426a0288e8ee0f45d8e4f7c288',
 //   conversationType: '2',
 //   senderId: '$:LWCP_v1:$Jkiww7n5Ryk9Gd/LSmH+Xg==',
-//   conversationTitle: 'lmon小天才助手-TEST',
+//   conversationTitle: '这是一个很神秘的群',
 //   isInAtList: true,
-//   sessionWebhook: 'https://oapi.dingtalk.com/robot/sendBySession?session=52498f861dc6c9eb0ff5d74e8b603572',
-//   text: { content: ' [help]' },
-//   robotCode: 'normal',
+//   sessionWebhook: 'https://oapi.dingtalk.com/robot/sendBySession?session=50143ef4da0759f8767caad4931641c8',
+//   text: {
+//     content: 'https://oapi.dingtalk.com/robot/sendBySession?session=50143ef4da0759f8767caad4931641c8 '
+//   },
+//   robotCode: 'dinguju4o7sbhlfatz7d',
 //   msgtype: 'text'
 // }
 
@@ -27,8 +33,10 @@ router.post("/rebot", async (ctx) => {
     let body = ctx.request.body
     try {
         let content = await instance.appHandelerInstance.rebootParse(body.text.content, body.conversationTitle, body.senderNick)
-        ctx.body = body
-        ctx.body.text = { content: content }
+        // ctx.body = body
+        // ctx.body.text = { content: content }
+        tools.sendDingDingMsg(body.sessionWebhook, content, [], [body.senderStaffId])
+
     } catch (error) {
         tools.error('/rebot error->', error)
     }
