@@ -6,11 +6,18 @@ module.exports = {
             name: "fundStt",
             description: "(fundStt,隔几天！,计次！,最大值！) 统计近期基金情况",
             group: "funds-基金类",
+            times: ['0 50 14 * * *', '0 30 14 * * *', "0 30 12 * * *"],//秒 分 时 日 月 星期几（0-6）
         }, {
             main: require('./test/test'),
             // reqFilePath: require.resolve('./test/test'),
             name: "atest",
             description: "(atest,...) 就试试，测测",
+            group: "test-测试类",
+        }, {
+            main: require('./test/test1'),
+            // reqFilePath: require.resolve('./test/test'),
+            name: "atest1",
+            description: "(atest1,...) 就试试，测测1",
             group: "test-测试类",
         }, {
             main: require('./notes/noteAdd'),

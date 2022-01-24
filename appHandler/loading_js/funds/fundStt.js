@@ -112,5 +112,11 @@ function main(day = 2, times = 7, max = null) {
 
 
 module.exports = async function (info) {
-    return await main(...info.param)
+    if (info) {
+        return await main(...info.param)
+    } else {
+        let content = await main()
+        let dingding = require('../../../lib/dingding')
+        dingding.sendDingdingMsg(content, ["13221160826"])
+    }
 }
