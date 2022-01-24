@@ -85,7 +85,7 @@ class mysqlInterface {
             temp.push(`content like %${content}%`)
         }
         tools.debug('sql->', sql)
-        await this.dbop(sql)
+        return await this.dbop(sql)
     }
 }
 
