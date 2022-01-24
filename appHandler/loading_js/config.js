@@ -18,8 +18,8 @@ module.exports = {
             description: "(add,主题！,内容标题！,标签-标签-。。?) 记录笔记",
             group: "note-基金类",
         }, {
-            main: require('./verCode/verCode'),
-            name: "verCode",
+            main: require('./verCode/hmSuper'),
+            name: "hmSuper",
             description: "() 获取验证码-超级管员密码",
             group: "verCode-验证码类",
         }
