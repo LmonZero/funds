@@ -8,7 +8,7 @@ class loading extends cronMgr {
         //目前只干加载code配置 后续增加定时任务
         this.scriptInfo = {
             cmdTable: {},
-            // cmdClass: []
+            cmdClass: []
         }
     }
     init() {
