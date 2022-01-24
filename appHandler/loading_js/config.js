@@ -23,7 +23,12 @@ module.exports = {
             main: require('./notes/noteAdd'),
             name: "add",
             description: "(add,主题！,内容标题！,标签-标签-。。?) 记录笔记",
-            group: "note-基金类",
+            group: "note-笔记类",
+        }, {
+            main: require('./notes/noteAdd'),
+            name: "find",
+            description: "(find,%标签%?,主题？,内容标题?,%内容%?) 查询笔记",
+            group: "note-笔记类",
         }, {
             main: require('./verCode/hmSuper'),
             name: "hmSuper",

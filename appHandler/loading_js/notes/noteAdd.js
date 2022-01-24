@@ -1,3 +1,4 @@
+const dayjs = require("dayjs")
 
 async function main(info) {
 
@@ -5,7 +6,8 @@ async function main(info) {
         mainTheme: info.param[0],
         mainTitle: info.param[1],
         tag: info.param[2],
-        content: info.content
+        content: info.content,
+        createTime: dayjs().format("YYYYMMDDhhmmss")
     }
 
     await instance.mysqlHelperIntance.insterTable(tableInfo, 'notes')

@@ -68,6 +68,25 @@ class mysqlInterface {
         tools.debug('sql->', sql)
         await this.dbop(sql)
     }
+
+    async searchNote(tag, mainTitle, mainTheme, content) {
+        let sql = `select * from notes where id>0`
+        let temp = []
+        if (tag) {
+            temp.push(`tag like %${tag}%`)
+        }
+        if (mainTitle) {
+            temp.push(`mainTitle = ${mainTitle}`)
+        }
+        if (mainTheme) {
+            temp.push(`mainTheme = ${mainTheme}`)
+        }
+        if (content) {
+            temp.push(`content like %${content}%`)
+        }
+        tools.debug('sql->', sql)
+        await this.dbop(sql)
+    }
 }
 
 module.exports = mysqlInterface
