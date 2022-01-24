@@ -73,16 +73,16 @@ class mysqlInterface {
         let sql = `select * from notes`
         let temp = []
         if (tag) {
-            temp.push(`tag like %${tag}%`)
+            temp.push(`tag like "%${tag}%"`)
         }
         if (mainTitle) {
-            temp.push(`mainTitle = ${mainTitle}`)
+            temp.push(`mainTitle ="${mainTitle}"`)
         }
         if (mainTheme) {
-            temp.push(`mainTheme = ${mainTheme}`)
+            temp.push(`mainTheme = "${mainTheme}"`)
         }
         if (content) {
-            temp.push(`content like %${content}%`)
+            temp.push(`content like "%${content}%"`)
         }
         if (temp.length > 0) {
             sql += ` where (${temp.join(' or ')})`
