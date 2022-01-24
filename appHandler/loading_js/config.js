@@ -25,7 +25,7 @@ module.exports = {
             description: "(add,主题！,内容标题！,标签-标签-。。?) 记录笔记",
             group: "note-笔记类",
         }, {
-            main: require('./notes/noteAdd'),
+            main: require('./notes/noteFind'),
             name: "find",
             description: "(find,%标签%?,主题？,内容标题?,%内容%?) 查询笔记",
             group: "note-笔记类",

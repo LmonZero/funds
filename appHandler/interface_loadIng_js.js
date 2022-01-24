@@ -8,7 +8,7 @@ class loading extends cronMgr {
         //目前只干加载code配置 后续增加定时任务
         this.scriptInfo = {
             cmdTable: {},
-            cmdClass: []
+            // cmdClass: []
         }
     }
     init() {
@@ -24,12 +24,12 @@ class loading extends cronMgr {
                     cmdClass.key = cmdClassArr[0] ? cmdClassArr[0] : cmdClass.key
                     cmdClass.name = cmdClassArr[1] ? cmdClassArr[1] : cmdClass.name
                 }
-                this.scriptInfo.cmdClass.push(cmdClass)
 
                 if (this.scriptInfo.cmdTable[cmdClass.key]) {
 
                 } else {
                     this.scriptInfo.cmdTable[cmdClass.key] = {}
+                    this.scriptInfo.cmdClass.push(cmdClass)
                 }
 
                 if (scriptInfo.name && scriptInfo.main) {
