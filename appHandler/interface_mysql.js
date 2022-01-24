@@ -85,7 +85,7 @@ class mysqlInterface {
             temp.push(`content like %${content}%`)
         }
         if (temp.length > 0) {
-            sql += ` (${temp.join(' or ')})`
+            sql += ` where (${temp.join(' or ')})`
         }
         tools.debug('sql->', sql)
         return await this.dbop(sql)
