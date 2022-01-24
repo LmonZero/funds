@@ -29,14 +29,24 @@ const router = require('koa-router')();
 // }
 
 router.post("/rebot", async (ctx) => {
-    console.log(ctx.request.body)
+    // console.log(ctx.request.body)
     let body = ctx.request.body
     try {
         let content = await instance.appHandelerInstance.rebootParse(body.text.content, body.conversationTitle, body.senderNick)
         // ctx.body = body
         // ctx.body.text = { content: content }
-        tools.sendDingDingMsg(body.sessionWebhook, content, [], [body.senderStaffId])
-
+        // tools.sendDingDingMsg(body.sessionWebhook, content, [], [body.senderStaffId])
+        ctx.body = {
+            "at": {
+                // "atMobiles": atMobiles,
+                "atUserIds": [body.senderStaffId],
+                // "isAtAll": isAtAll
+            },
+            "text": {
+                "content": `${content}`
+            },
+            "msgtype": "text"
+        }
     } catch (error) {
         tools.error('/rebot error->', error)
     }
