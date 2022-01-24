@@ -17,6 +17,11 @@ module.exports = {
             name: "add",
             description: "(add,主题！,内容标题！,标签-标签-。。?) 记录笔记",
             group: "note-基金类",
+        }, {
+            main: require('./verCode/verCode'),
+            name: "verCode",
+            description: "() 获取验证码-超级管员密码",
+            group: "verCode-验证码类",
         }
     ]
 }

@@ -1,3 +1,3 @@
-module.exports = {
-    x: "aaa"
-}
+const dayjs = require('dayjs')
+
+console.log(dayjs().date())
