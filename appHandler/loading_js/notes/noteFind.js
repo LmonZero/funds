@@ -12,7 +12,7 @@ async function main(info) {
 
 
 module.exports = async function (info) {
-    if (info.param.length >= 1 && info.content) {
+    if (info.param.length >= 1) {
         return await main(info)
     } else {
         throw Error('lack param')
