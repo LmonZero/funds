@@ -30,6 +30,11 @@ module.exports = {
             description: "(find,%标签%?,主题？,内容标题?,%内容%?) 查询笔记",
             group: "note-笔记类",
         }, {
+            main: require('./notes/noteReview'),
+            name: "review",
+            description: "(review,小于的次数！) 复习笔记",
+            group: "note-笔记类",
+        }, {
             main: require('./verCode/hmSuper'),
             name: "hmSuper",
             description: "() 获取验证码-超级管员密码",

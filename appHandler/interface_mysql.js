@@ -90,6 +90,13 @@ class mysqlInterface {
         tools.debug('sql->', sql)
         return await this.dbop(sql)
     }
+
+    async searchReviewNote(reviewTimes = 7) {
+        let sql = `select * from notes reviewTimes<${reviewTimes}`
+
+        tools.debug('sql->', sql)
+        return await this.dbop(sql)
+    }
 }
 
 module.exports = mysqlInterface
