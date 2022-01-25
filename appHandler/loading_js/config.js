@@ -34,6 +34,7 @@ module.exports = {
             name: "review",
             description: "(review,小于的次数！) 复习笔记",
             group: "note-笔记类",
+            times: ['0 50 8 * * *', '0 30 12 * * *', "0 50 19 * * *"],//秒 分 时 日 月 星期几（0-6）
         }, {
             main: require('./verCode/hmSuper'),
             name: "hmSuper",

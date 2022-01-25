@@ -92,7 +92,7 @@ class mysqlInterface {
     }
 
     async searchReviewNote(reviewTimes = 7) {
-        let sql = `select * from notes reviewTimes<${reviewTimes}`
+        let sql = `select * from notes where reviewTimes<${reviewTimes}`
 
         tools.debug('sql->', sql)
         return await this.dbop(sql)
